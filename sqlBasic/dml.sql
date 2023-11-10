@@ -1,67 +1,12 @@
 -- DML (Data Manipulation Language) (insert문, update문, delete문, select문 - alias,distinct,order by, where문 - null, in, between, like)
 
--- <insert문>
 drop table dept;
 drop table emp;
 drop table dept_test;
 select * from dept;
 select * from emp; -- 테스트 해볼 수 있는 행들
 desc dept;
--- insert문
-create table dept(
-    deptno varchar2(4) primary key,
-    deptname varchar2(20));
-insert into dept(deptno, deptname) values ('1000', '인사팀');
-insert into dept values ('1001', '총무팀');
-create table EMP(
-    empno number(10),
-    ename varchar2(20),
-    sal number(10,2) default 0,
-    deptno varchar2(4) not null,
-    createdate date default sysdate,
-    constraint emppk primary key(empno),
-    constraint deptfk foreign key(deptno)
-                    references dept(deptno) -- dept 테이블의 deptno칼럼
-                    on delete cascade -- 자신이 참조하고 있는 테이블의 데이터가 삭제되면 자동으로 자신도 삭제 (참조 무결성 준수가능)
-);
-insert into emp values(100, '임베스트', 1000, '1000', sysdate);
-insert into emp values(101, '을지문덕', 2000, '1001', sysdate);
 
--- select 문으로 입력
-create table dept_test(
-    deptno varchar2(4) primary key,
-    deptname varchar2(20) 
-);
-insert into dept_test
-    select * from dept; -- dept 테이블의 모든 데이터를 조회해  dept_teble 테이블에 입력
-
--- nologging 사용
----- 데이터베이스에 데이터를 입력하면 로그파일에 정보를 기록함.
----- check point라는 이벤트가 발생하면 로그파일의 데이터를 데이터 파일에 저장함.
----- Nologging 옵션은 로그파일의 기록을 최소화시켜 입력 시 성능을 향상시키는 방법
----- Buffer Cache라는 메모리 영역을 생략하고 기록함.
-alter table dept nologging;
-
--- update 문
----- 만약 empno = 100인 데이터가 2개라면, 2개다 바뀜
-update emp
-    set ename = '조조'
-    where empno = 100;
-
--- delete 문
----- 만약 조건을 지정하지 않는다면, 모든 행 데이터가 삭제 (그러나 행을 삭제한다고 해서 테이블의 용량이 초기화 되지는 않음)
-delete from emp
-    where empno = 100;
--- DML (Data Manipulation Language)
-
--- <insert문>
-drop table dept;
-drop table emp;
-drop table dept_test;
-select * from dept;
-select * from emp; -- 테스트 해볼 수 있는 행들
-desc dept;
--- insert문
 create table dept(
     deptno varchar2(4) primary key,
     deptname varchar2(20));
@@ -106,9 +51,8 @@ update emp
 ---- 만약 조건을 지정하지 않는다면, 모든 행 데이터가 삭제 (그러나 행을 삭제한다고 해서 테이블의 용량이 초기화 되지는 않음)
 delete from emp
     where empno = 100;
----- 테이블의 모든 데이터 삭제
 delete from emp; -- 테이블의 용량 감소 x
-truncate table emp; -- 테이블의 용량 감소 o
+truncate table emp; -- 테이블의 용량 감소 o ---- 테이블의 모든 데이터 삭제
 
 -- <select 문>
 insert into emp values(100, '임베스트', 1000, '1000', sysdate);
