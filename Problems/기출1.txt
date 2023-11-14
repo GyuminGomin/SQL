@@ -1,15 +1,15 @@
-1. 3 		16. 3 		31. 3		46. 		
-2. 2 		17. 		32. 		47. 		
-3. 4 		18. 1		33. 		48. 		
-4. 2 		19. 3		34. 		49. 		
-5. 1 		20. 		35. 		50. 		
-6. 4 		21. 4		36. 		
-7.  		22. 3		37. 		
-8. 3 		23. 3		38. 		
-9. 2 		24. 4		39. 		
-10. 3		25. 4		40. 		
-11. 3		26. 2		41. 		
-12. 3		27. 3		42. 		
-13. 3		28. 2		43. 		
-14. 4		29. 1		44. 		
-15. 2		30. 1		45. 		
+1. 3 o		16. 3 o		31. 3 x	4	46. 400	o	
+2. 2 x 4	17.   x 3	32. 3 x 1	47.  x grouping sets (b.grade, (b.grade, a.job))		
+3. 4 o		18. 1 x 3	33. 4 x 1	48.  x count(*) over (order by sal range between 50 preceding and 100 following)		
+4. 2 x 4	19. 3 x 4	34. 4 o		49.  x 내부, 외부		
+5. 1 x 2	20.   x 2	35. 4 o		50.  x select 1 from mytestb b where (a.col1 = b.col1 and a.col2 = b.col2 and b.col2 >1400)		
+6. 4 o		21. 4 o		36. 3 o		
+7.   x 4	22. 3 o		37. 2 o		
+8. 3 o		23. 3 x 4	38. 3 o		
+9. 2 x 3	24. 4 o		39. 3 x 4		
+10. 3 o		25. 4 o		40. 1 o		
+11. 3 o		26. 2 o		41. 4 o		
+12. 3 o		27. 3 o		42. 3 o		
+13. 3 o		28. 2 o		43.   x Right Outer Join		
+14. 4 o		29. 1 x 2	44.   x Left Outer Join		
+15. 2 o		30. 1 x 3	45.   x candidate key		
