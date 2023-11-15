@@ -44,3 +44,46 @@ select *
             group by job_id
             );
 -- 그래 결과값이 같지만, 순서가 다르다.
+
+drop table test3;
+create table test3
+(
+    col1 number(10)
+);
+insert into test3 values (0);
+insert into test3 values (null);
+insert into test3 values (0);
+insert into test3 values (null);
+insert into test3 values (0);
+insert into test3 values (null);
+
+select case a.col1 when null then -1 else 0 end as data from test3 a;
+
+
+drop table test4;
+create table test4
+(
+    ncol1 number(10),
+    ncol2 number(10),
+    ncol3 varchar2(10),
+    ncol4 varchar2(10)
+);
+
+insert into test4 values (1, null, 'a', null);
+insert into test4 values (2, 1, 'b', 'a');
+insert into test4 values (4, 2, 'd', 'b');
+insert into test4 values (5, 4, 'e', 'd');
+insert into test4 values (3, 5, 'c', 'a');
+
+select *
+    from test4
+    start with ncol3 = 'b'
+    connect by prior ncol1 = ncol2
+        and prior ncol3 = 'b';
+
+select *
+    from test4
+    start with ncol3 = 'b'
+    connect by prior ncol1 = ncol2
+        and prior ncol4 = 'b';
+        
