@@ -87,3 +87,27 @@ select *
     connect by prior ncol1 = ncol2
         and prior ncol4 = 'b';
         
+create table test5
+(
+    ProductName varchar(10),
+    ProductCode varChar(10),
+    Price number(10)
+);
+
+insert into test5 values ('비디오', 'A001', 2002);
+insert into test5 values ('오디오', 'D001', 2000);
+insert into test5 values ('책', 'G001', 3020);
+insert into test5 values ('비디오', 'B001', 4000);
+insert into test5 values ('오디오', 'E001', 5100);
+insert into test5 values ('비디오', 'C001',22000);
+insert into test5 values ('책', 'H001', 7100);
+insert into test5 values ('오디오', 'F001', 8020);
+
+select ProductName, sum(price)
+    from test5
+--    where ProductName = '비디오'
+    group by rollup(productName);
+
+select ProductName, sum(price)
+    from test5
+    group by grouping sets(productName, ());
