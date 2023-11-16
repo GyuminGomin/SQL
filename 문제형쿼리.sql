@@ -2,9 +2,9 @@ drop table test1;
 
 create table test1
 (
-ºÎ¼­id number(10),
-ºÎ¼­ÄÚµå number(10),
-»óÀ§ºÎ¼­ÄÚµå number(10)
+ï¿½Î¼ï¿½id number(10),
+ï¿½Î¼ï¿½ï¿½Úµï¿½ number(10),
+ï¿½ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½Úµï¿½ number(10)
 );
 
 insert into test1 values(10,50,0);
@@ -15,12 +15,12 @@ insert into test1 values(50,250,200);
 
 select *
 from test1
-where ºÎ¼­ÄÚµå = 400
-start with ºÎ¼­ÄÚµå = 50
-connect by prior ºÎ¼­ÄÚµå = »óÀ§ºÎ¼­ÄÚµå;
+where ï¿½Î¼ï¿½ï¿½Úµï¿½ = 400
+start with ï¿½Î¼ï¿½ï¿½Úµï¿½ = 50
+connect by prior ï¿½Î¼ï¿½ï¿½Úµï¿½ = ï¿½ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½Úµï¿½;
 
--- connect by prior ÀÚ½Ä = ºÎ¸ð : ºÎ¸ð¿¡¼­ºÎÅÍ ÀÚ½ÄÀ¸·Î (¼ø¹æÇâ)
--- connect by prior ºÎ¸ð = ÀÚ½Ä : ÀÚ½Ä¿¡¼­ºÎÅÍ ºÎ¸ð·Î (¿ª¹æÇâ)
+-- connect by prior ï¿½Ú½ï¿½ = ï¿½Î¸ï¿½ : ï¿½Î¸ð¿¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+-- connect by prior ï¿½Î¸ï¿½ = ï¿½Ú½ï¿½ : ï¿½Ú½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
 
 create table test2 
@@ -43,7 +43,7 @@ select *
           select job_id, min(salary) from test2
             group by job_id
             );
--- ±×·¡ °á°ú°ªÀÌ °°Áö¸¸, ¼ø¼­°¡ ´Ù¸£´Ù.
+-- ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½.
 
 drop table test3;
 create table test3
@@ -94,20 +94,80 @@ create table test5
     Price number(10)
 );
 
-insert into test5 values ('ºñµð¿À', 'A001', 2002);
-insert into test5 values ('¿Àµð¿À', 'D001', 2000);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½', 'A001', 2002);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½ï¿½', 'D001', 2000);
 insert into test5 values ('Ã¥', 'G001', 3020);
-insert into test5 values ('ºñµð¿À', 'B001', 4000);
-insert into test5 values ('¿Àµð¿À', 'E001', 5100);
-insert into test5 values ('ºñµð¿À', 'C001',22000);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½', 'B001', 4000);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½ï¿½', 'E001', 5100);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½', 'C001',22000);
 insert into test5 values ('Ã¥', 'H001', 7100);
-insert into test5 values ('¿Àµð¿À', 'F001', 8020);
+insert into test5 values ('ï¿½ï¿½ï¿½ï¿½ï¿½', 'F001', 8020);
 
 select ProductName, sum(price)
     from test5
---    where ProductName = 'ºñµð¿À'
+--    where ProductName = 'ï¿½ï¿½ï¿½ï¿½'
     group by rollup(productName);
 
 select ProductName, sum(price)
     from test5
     group by grouping sets(productName, ());
+
+
+create table test6
+    (
+    	col1 varchar2(10),
+    	col2 varchar2(10),
+    	col3 number(10)
+    );
+
+insert into test6 values('A', null, 1);
+insert into test6 values('B', 'A', 2);
+insert into test6 values('C', 'A', 3);
+insert into test6 values('D', 'B', 4);
+
+select * from test6
+where col3 = 1
+start with col3=3
+connect by col1 = prior col2;
+
+create table test7
+    (
+    	BAN number(10),
+    	name varchar2(10)
+    );
+insert into test7 values(1, 'ì¡°ì¡°');
+insert into test7 values(1, 'ì¡°ì¡°');
+insert into test7 values(1, 'ì¡°ì¡°');
+insert into test7 values(2, 'ì—¬í¬');
+insert into test7 values(2, 'ìœ ë¹„');
+insert into test7 values(3, 'ê´€ìš°');
+insert into test7 values(3, 'ê´€ìš°');
+
+select ban, count(1) as result
+from test7
+group by ban;
+
+create table test8
+    (
+    	memberID number(10),
+    	Name varchar2(10)
+    );
+
+insert into test8 values(null, 'ì¡°ì¡°');
+insert into test8 values(2, 'ì—¬í¬');
+insert into test8 values(3, 'ê´€ìš°');
+insert into test8 values(4, 'ìž¥ë¹„');
+insert into test8 values(5, 'ì¡°ìš´');
+insert into test8 values(null, 'ìœ ë¹„');
+
+
+create table test20 (col1 number(10));
+insert into test20 values(1);
+insert into test20 values(4);
+savepoint sv1;
+update test20 set col1=8 where col1=2;
+savepoint sv1;
+delete test20 where col1 >=2;
+rollback to sv1;
+insert into test20 values(3);
+select max(col1) from test20;
